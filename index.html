@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Controle de Moldes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 { text-align: center; }
+    .card {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+      margin-bottom: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+      gap: 12px;
+    }
+    .field { display: flex; flex-direction: column; }
+    label { font-weight: bold; margin-bottom: 4px; }
+    input, select {
+      padding: 6px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .actions { margin-top: 12px; }
+    button {
+      padding: 8px 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-right: 8px;
+    }
+    .btn-primary { background: #2d6cdf; color: #fff; }
+    .btn-danger { background: #d9534f; color: #fff; }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+    }
+    th { background: #eee; }
+  </style>
+</head>
+<body>
+  <h1>Controle de Moldes</h1>
+  <div class="card">
+    <form id="form">
+      <div class="grid">
+        <div class="field">
+          <label>Molde</label>
+          <input type="text" id="molde" required>
+        </div>
+        <div class="field">
+          <label>Quantidade</label>
+          <input type="number" id="quantidade" required>
+        </div>
+        <div class="field">
+          <label>Responsável</label>
+          <input type="text" id="responsavel" required>
+        </div>
+        <div class="field">
+          <label>Data Início</label>
+          <input type="date" id="inicio" required>
+        </div>
+        <div class="field">
+          <label>Data Término</label>
+          <input type="date" id="termino" required>
+        </div>
+        <div class="field">
+          <label>Limpeza</label>
+          <select id="limpeza" required>
+            <option value="">Selecione...</option>
+            <option>Sim</option>
+            <option>Não</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Molas - Cor</label>
+          <input type="text" id="molasCor">
+        </div>
+        <div class="field">
+          <label>Molas - Diâmetro</label>
+          <input type="text" id="molasDiametro">
+        </div>
+        <div class="field">
+          <label>Molas - Quantidade</label>
+          <input type="number" id="molasQtd">
+        </div>
+        <div class="field">
+          <label>Parafusos - Quantidade</label>
+          <input type="number" id="parafusosQtd">
+        </div>
+        <div class="field">
+          <label>Parafusos - Alen M</label>
+          <input type="text" id="parafusosAlenM">
+        </div>
+        <div class="field">
+          <label>Parafusos - x MM</label>
+          <input type="text" id="parafusosMM">
+        </div>
+        <div class="field">
+          <label>Pinos Extrator - Quantidade</label>
+          <input type="number" id="pinosQtd">
+        </div>
+        <div class="field">
+          <label>Pinos Extrator - Diâmetro</label>
+          <input type="text" id="pinosDiametro">
+        </div>
+        <div class="field">
+          <label>Engates de Água</label>
+          <select id="engatesAgua">
+            <option value="">Selecione...</option>
+            <option>Sim</option>
+            <option>Não</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Engates - Quantidade</label>
+          <input type="number" id="engatesQtd">
+        </div>
+        <div class="field">
+          <label>Polimento</label>
+          <select id="polimento">
+            <option value="">Selecione...</option>
+            <option>Sim</option>
+            <option>Não</option>
+          </select>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="submit" class="btn-primary">Salvar</button>
+      </div>
+    </form>
+  </div>
+
+  <div class="card">
+    <h2>Registros</h2>
+    <table id="tabela">
+      <thead>
+        <tr>
+          <th>Molde</th><th>Qtd</th><th>Resp.</th><th>Início</th><th>Término</th>
+          <th>Limpeza</th><th>Molas</th><th>Parafusos</th><th>Pinos</th>
+          <th>Engates</th><th>Polimento</th><th>Ações</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    const form = document.getElementById('form');
+    const tabela = document.querySelector('#tabela tbody');
+    let registros = [];
+
+    form.addEventListener('submit', e => {
+      e.preventDefault();
+      const registro = {
+        molde: document.getElementById('molde').value,
+        quantidade: document.getElementById('quantidade').value,
+        responsavel: document.getElementById('responsavel').value,
+        inicio: document.getElementById('inicio').value,
+        termino: document.getElementById('termino').value,
+        limpeza: document.getElementById('limpeza').value,
+        molas: `Cor:${document.getElementById('molasCor').value}, Ø:${document.getElementById('molasDiametro').value}, Qtd:${document.getElementById('molasQtd').value}`,
+        parafusos: `Qtd:${document.getElementById('parafusosQtd').value}, Alen M:${document.getElementById('parafusosAlenM').value}, xMM:${document.getElementById('parafusosMM').value}`,
+        pinos: `Qtd:${document.getElementById('pinosQtd').value}, Ø:${document.getElementById('pinosDiametro').value}`,
+        engates: `Agua:${document.getElementById('engatesAgua').value}, Qtd:${document.getElementById('engatesQtd').value}`,
+        polimento: document.getElementById('polimento').value
+      };
+      registros.push(registro);
+      render();
+      form.reset();
+    });
+
+    function render() {
+      tabela.innerHTML = '';
+      registros.forEach((r,i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.molde}</td>
+          <td>${r.quantidade}</td>
+          <td>${r.responsavel}</td>
+          <td>${r.inicio}</td>
+          <td>${r.termino}</td>
+          <td>${r.limpeza}</td>
+          <td>${r.molas}</td>
+          <td>${r.parafusos}</td>
+          <td>${r.pinos}</td>
+          <td>${r.engates}</td>
+          <td>${r.polimento}</td>
+          <td><button class="btn-danger" onclick="excluir(${i})">Excluir</button></td>
+        `;
+        tabela.appendChild(tr);
+      });
+    }
+
+    function excluir(i) {
+      registros.splice(i,1);
+      render();
+    }
+  </script>
+</body>
+</html>
