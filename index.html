@@ -1,214 +1,287 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Controle de Moldes</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Formulário: Molde e Componentes</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f4f4;
-      margin: 0;
-      padding: 20px;
-    }
-    h1 { text-align: center; }
-    .card {
-      background: #fff;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-      margin-bottom: 20px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-      gap: 12px;
-    }
-    .field { display: flex; flex-direction: column; }
-    label { font-weight: bold; margin-bottom: 4px; }
-    input, select {
-      padding: 6px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-    .actions { margin-top: 12px; }
-    button {
-      padding: 8px 14px;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-right: 8px;
-    }
-    .btn-primary { background: #2d6cdf; color: #fff; }
-    .btn-danger { background: #d9534f; color: #fff; }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 8px;
-      text-align: left;
-    }
-    th { background: #eee; }
+    :root{--bg:#f6f8fa;--card:#ffffff;--accent:#0f62fe;--muted:#6b7280}
+    *{box-sizing:border-box;font-family:Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial}
+    body{margin:0;background:var(--bg);color:#111}
+    .container{max-width:960px;margin:28px auto;padding:20px}
+    .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(12,20,30,.06)}
+    h1{margin:0 0 12px;font-size:20px}
+    form{display:grid;grid-template-columns:1fr;gap:12px}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px}
+    input[type=text], input[type=number], input[type=date], select{width:100%;padding:8px;border:1px solid #e6e9ef;border-radius:8px}
+    .row{display:flex;gap:8px;align-items:center}
+    .inline{display:flex;gap:8px;align-items:center}
+    .small{width:120px}
+    .btn{display:inline-block;padding:8px 12px;border-radius:8px;border:none;background:var(--accent);color:#fff;cursor:pointer}
+    .btn.secondary{background:#e6eefc;color:var(--accent);border:1px solid rgba(15,98,254,.12)}
+    .actions{display:flex;gap:8px;justify-content:flex-end}
+    fieldset{border:1px dashed #e6e9ef;padding:12px;border-radius:10px}
+    legend{font-weight:600}
+    .muted{color:var(--muted);font-size:13px}
+    table{width:100%;border-collapse:collapse;margin-top:8px}
+    th,td{border:1px solid #eef2f7;padding:6px;text-align:left;font-size:14px}
+    .small-input{width:80px}
+    .control-row{display:flex;gap:8px;flex-wrap:wrap}
+    .topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    @media (max-width:700px){.grid-2{grid-template-columns:1fr}.small{width:100%}}
   </style>
 </head>
 <body>
-  <h1>Controle de Moldes</h1>
-  <div class="card">
-    <form id="form">
-      <div class="grid">
-        <div class="field">
-          <label>Molde</label>
-          <input type="text" id="molde" required>
-        </div>
-        <div class="field">
-          <label>Quantidade</label>
-          <input type="number" id="quantidade" required>
-        </div>
-        <div class="field">
-          <label>Responsável</label>
-          <input type="text" id="responsavel" required>
-        </div>
-        <div class="field">
-          <label>Data Início</label>
-          <input type="date" id="inicio" required>
-        </div>
-        <div class="field">
-          <label>Data Término</label>
-          <input type="date" id="termino" required>
-        </div>
-        <div class="field">
-          <label>Limpeza</label>
-          <select id="limpeza" required>
-            <option value="">Selecione...</option>
-            <option>Sim</option>
-            <option>Não</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Molas - Cor</label>
-          <input type="text" id="molasCor">
-        </div>
-        <div class="field">
-          <label>Molas - Diâmetro</label>
-          <input type="text" id="molasDiametro">
-        </div>
-        <div class="field">
-          <label>Molas - Quantidade</label>
-          <input type="number" id="molasQtd">
-        </div>
-        <div class="field">
-          <label>Parafusos - Quantidade</label>
-          <input type="number" id="parafusosQtd">
-        </div>
-        <div class="field">
-          <label>Parafusos - Alen M</label>
-          <input type="text" id="parafusosAlenM">
-        </div>
-        <div class="field">
-          <label>Parafusos - x MM</label>
-          <input type="text" id="parafusosMM">
-        </div>
-        <div class="field">
-          <label>Pinos Extrator - Quantidade</label>
-          <input type="number" id="pinosQtd">
-        </div>
-        <div class="field">
-          <label>Pinos Extrator - Diâmetro</label>
-          <input type="text" id="pinosDiametro">
-        </div>
-        <div class="field">
-          <label>Engates de Água</label>
-          <select id="engatesAgua">
-            <option value="">Selecione...</option>
-            <option>Sim</option>
-            <option>Não</option>
-          </select>
-        </div>
-        <div class="field">
-          <label>Engates - Quantidade</label>
-          <input type="number" id="engatesQtd">
-        </div>
-        <div class="field">
-          <label>Polimento</label>
-          <select id="polimento">
-            <option value="">Selecione...</option>
-            <option>Sim</option>
-            <option>Não</option>
-          </select>
-        </div>
-      </div>
-      <div class="actions">
-        <button type="submit" class="btn-primary">Salvar</button>
-      </div>
-    </form>
-  </div>
+  <div class="container">
+    <div class="topbar">
+      <h1>Formulário: Molde e Componentes</h1>
+      <div class="muted">Preencha os campos e use os botões para salvar/baixar/imprimir</div>
+    </div>
 
-  <div class="card">
-    <h2>Registros</h2>
-    <table id="tabela">
-      <thead>
-        <tr>
-          <th>Molde</th><th>Qtd</th><th>Resp.</th><th>Início</th><th>Término</th>
-          <th>Limpeza</th><th>Molas</th><th>Parafusos</th><th>Pinos</th>
-          <th>Engates</th><th>Polimento</th><th>Ações</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div class="card">
+      <form id="form">
+        <div class="grid-2">
+          <div>
+            <label>Molde: Quantidade</label>
+            <input type="number" id="moldeQuantidade" min="0" value="1">
+          </div>
+          <div>
+            <label>Responsável</label>
+            <input type="text" id="responsavel" placeholder="Nome da pessoa">
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div>
+            <label>Data Início</label>
+            <input type="date" id="dataInicio">
+          </div>
+          <div>
+            <label>Data Término</label>
+            <input type="date" id="dataTermino">
+          </div>
+        </div>
+
+        <fieldset>
+          <legend>Limpeza</legend>
+          <div class="inline">
+            <label class="muted" style="margin-right:8px">Limpeza:</label>
+            <label><input type="radio" name="limpeza" value="sim"> Sim</label>
+            <label><input type="radio" name="limpeza" value="nao"> Não</label>
+          </div>
+        </fieldset>
+
+        <fieldset id="molasField">
+          <legend>Molas</legend>
+          <div class="control-row" style="margin-bottom:8px">
+            <label style="min-width:70px">Cor</label>
+            <input type="text" id="molasCor" placeholder="Ex: Azul" class="small">
+            <label style="min-width:90px">Diâmetro</label>
+            <input type="text" id="molasDiam" placeholder="mm" class="small">
+            <label style="min-width:90px">Quantidade</label>
+            <input type="number" id="molasQtd" min="0" value="0" class="small-input">
+            <button type="button" class="btn secondary" id="addMola">Adicionar linha</button>
+          </div>
+
+          <table id="molasTable">
+            <thead><tr><th>Cor</th><th>Diâmetro</th><th>Quantidade</th><th>Ações</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </fieldset>
+
+        <fieldset>
+          <legend>Parafusos</legend>
+          <div class="grid-2">
+            <div>
+              <label>Quantidade</label>
+              <input type="number" id="parafQtd" min="0" value="0">
+            </div>
+            <div>
+              <label>Alen, M</label>
+              <input type="text" id="parafAlen" placeholder="Ex: M4">
+            </div>
+          </div>
+          <div style="margin-top:8px">
+            <label>x MM</label>
+            <input type="text" id="parafMM" placeholder="Comprimento em mm">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Pinos / Extrator</legend>
+          <div class="grid-2">
+            <div>
+              <label>Quantidade</label>
+              <input type="number" id="pinosQtd" min="0" value="0">
+            </div>
+            <div>
+              <label>Diâmetro</label>
+              <input type="text" id="pinosDiam" placeholder="mm">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Engates de Água</legend>
+          <div class="inline" style="gap:12px;margin-bottom:8px">
+            <label><input type="radio" name="engates" value="sim"> Sim</label>
+            <label><input type="radio" name="engates" value="nao"> Não</label>
+            <label style="margin-left:12px">Quantidade</label>
+            <input type="number" id="engatesQtd" min="0" value="0" class="small-input">
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend>Polimento</legend>
+          <div class="inline">
+            <label><input type="radio" name="polimento" value="sim"> Sim</label>
+            <label><input type="radio" name="polimento" value="nao"> Não</label>
+          </div>
+        </fieldset>
+
+        <div class="actions">
+          <button type="button" class="btn secondary" id="loadBtn">Carregar</button>
+          <button type="button" class="btn secondary" id="exportBtn">Exportar JSON</button>
+          <button type="button" class="btn" id="saveBtn">Salvar local</button>
+          <button type="button" class="btn" id="printBtn">Imprimir/Salvar PDF</button>
+        </div>
+      </form>
+    </div>
+
+    <div style="height:12px"></div>
+    <div class="card">
+      <h3>Preview / Dados salvos</h3>
+      <pre id="preview" style="white-space:pre-wrap;margin:8px 0;max-height:280px;overflow:auto;background:#fbfdff;padding:12px;border-radius:8px;border:1px solid #eef4ff"></pre>
+    </div>
   </div>
 
   <script>
-    const form = document.getElementById('form');
-    const tabela = document.querySelector('#tabela tbody');
-    let registros = [];
+    // Helpers
+    const qs = s => document.querySelector(s);
+    const qsa = s => document.querySelectorAll(s);
 
-    form.addEventListener('submit', e => {
-      e.preventDefault();
-      const registro = {
-        molde: document.getElementById('molde').value,
-        quantidade: document.getElementById('quantidade').value,
-        responsavel: document.getElementById('responsavel').value,
-        inicio: document.getElementById('inicio').value,
-        termino: document.getElementById('termino').value,
-        limpeza: document.getElementById('limpeza').value,
-        molas: `Cor:${document.getElementById('molasCor').value}, Ø:${document.getElementById('molasDiametro').value}, Qtd:${document.getElementById('molasQtd').value}`,
-        parafusos: `Qtd:${document.getElementById('parafusosQtd').value}, Alen M:${document.getElementById('parafusosAlenM').value}, xMM:${document.getElementById('parafusosMM').value}`,
-        pinos: `Qtd:${document.getElementById('pinosQtd').value}, Ø:${document.getElementById('pinosDiametro').value}`,
-        engates: `Agua:${document.getElementById('engatesAgua').value}, Qtd:${document.getElementById('engatesQtd').value}`,
-        polimento: document.getElementById('polimento').value
-      };
-      registros.push(registro);
-      render();
-      form.reset();
+    // Molas table handling
+    const molas = [];
+    const molasTableBody = qs('#molasTable tbody');
+    const renderMolas = () => {
+      molasTableBody.innerHTML = '';
+      molas.forEach((m, i) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${escapeHtml(m.cor)}</td><td>${escapeHtml(m.diam)}</td><td>${m.qtd}</td><td><button data-index="${i}" class="btn secondary removeMola">Remover</button></td>`;
+        molasTableBody.appendChild(tr);
+      });
+      updatePreview();
+    };
+
+    function escapeHtml(str){ return String(str||'').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;'); }
+
+    qs('#addMola').addEventListener('click', ()=>{
+      const cor = qs('#molasCor').value.trim();
+      const diam = qs('#molasDiam').value.trim();
+      const qtd = Number(qs('#molasQtd').value) || 0;
+      if(!cor && !diam && qtd===0){ alert('Preencha ao menos um campo de mola.'); return; }
+      molas.push({cor, diam, qtd});
+      qs('#molasCor').value = '';
+      qs('#molasDiam').value = '';
+      qs('#molasQtd').value = 0;
+      renderMolas();
     });
 
-    function render() {
-      tabela.innerHTML = '';
-      registros.forEach((r,i) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-          <td>${r.molde}</td>
-          <td>${r.quantidade}</td>
-          <td>${r.responsavel}</td>
-          <td>${r.inicio}</td>
-          <td>${r.termino}</td>
-          <td>${r.limpeza}</td>
-          <td>${r.molas}</td>
-          <td>${r.parafusos}</td>
-          <td>${r.pinos}</td>
-          <td>${r.engates}</td>
-          <td>${r.polimento}</td>
-          <td><button class="btn-danger" onclick="excluir(${i})">Excluir</button></td>
-        `;
-        tabela.appendChild(tr);
-      });
+    molasTableBody.addEventListener('click', (e)=>{
+      if(e.target.matches('.removeMola')){
+        const i = Number(e.target.dataset.index);
+        molas.splice(i,1);
+        renderMolas();
+      }
+    });
+
+    // Form operations
+    function readForm(){
+      const form = {};
+      form.moldeQuantidade = Number(qs('#moldeQuantidade').value) || 0;
+      form.responsavel = qs('#responsavel').value;
+      form.dataInicio = qs('#dataInicio').value;
+      form.dataTermino = qs('#dataTermino').value;
+      form.limpeza = (qs('input[name=limpeza]:checked')||{}).value || null;
+      form.molas = [...molas];
+      form.parafusos = {
+        quantidade: Number(qs('#parafQtd').value)||0,
+        alen: qs('#parafAlen').value,
+        mm: qs('#parafMM').value
+      };
+      form.pinos = { quantidade: Number(qs('#pinosQtd').value)||0, diametro: qs('#pinosDiam').value };
+      form.engates = { value: (qs('input[name=engates]:checked')||{}).value || null, quantidade: Number(qs('#engatesQtd').value)||0 };
+      form.polimento = (qs('input[name=polimento]:checked')||{}).value || null;
+      return form;
     }
 
-    function excluir(i) {
-      registros.splice(i,1);
-      render();
+    function fillForm(data){
+      qs('#moldeQuantidade').value = data.moldeQuantidade || 0;
+      qs('#responsavel').value = data.responsavel || '';
+      qs('#dataInicio').value = data.dataInicio || '';
+      qs('#dataTermino').value = data.dataTermino || '';
+      if(data.limpeza) qs(`input[name=limpeza][value="${data.limpeza}"]`).checked = true;
+      molas.splice(0, molas.length, ...(data.molas||[]));
+      renderMolas();
+      qs('#parafQtd').value = (data.parafusos && data.parafusos.quantidade) || 0;
+      qs('#parafAlen').value = (data.parafusos && data.parafusos.alen) || '';
+      qs('#parafMM').value = (data.parafusos && data.parafusos.mm) || '';
+      qs('#pinosQtd').value = (data.pinos && data.pinos.quantidade) || 0;
+      qs('#pinosDiam').value = (data.pinos && data.pinos.diametro) || '';
+      if(data.engates && data.engates.value) qs(`input[name=engates][value="${data.engates.value}"]`).checked = true;
+      qs('#engatesQtd').value = (data.engates && data.engates.quantidade) || 0;
+      if(data.polimento) qs(`input[name=polimento][value="${data.polimento}"]`).checked = true;
+      updatePreview();
     }
+
+    // Preview
+    function updatePreview(){
+      const data = readForm();
+      qs('#preview').textContent = JSON.stringify(data, null, 2);
+    }
+
+    // Wire inputs to preview updates
+    qsa('input,select').forEach(i=>i.addEventListener('input', updatePreview));
+
+    // Save / Load localStorage
+    const STORAGE_KEY = 'formMolde:v1';
+    qs('#saveBtn').addEventListener('click', ()=>{
+      const data = readForm();
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+      alert('Salvo localmente no navegador.');
+    });
+    qs('#loadBtn').addEventListener('click', ()=>{
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if(!raw){ alert('Nenhum dado salvo localmente.'); return; }
+      try{ const data = JSON.parse(raw); fillForm(data); alert('Dados carregados.'); }catch(e){ alert('Erro ao carregar.'); }
+    });
+
+    // Export JSON
+    qs('#exportBtn').addEventListener('click', ()=>{
+      const data = readForm();
+      const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = 'form_molde.json'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    // Print
+    qs('#printBtn').addEventListener('click', ()=>{
+      // Prepare a printable view
+      const data = readForm();
+      const w = window.open('', '_blank');
+      const html = `<!doctype html><html><head><meta charset="utf-8"><title>Relatório</title><style>body{font-family:Arial,Helvetica,sans-serif;padding:20px}pre{white-space:pre-wrap}</style></head><body><h2>Relatório - Molde e Componentes</h2><pre>${escapeHtml(JSON.stringify(data,null,2))}</pre></body></html>`;
+      w.document.open(); w.document.write(html); w.document.close();
+      w.focus();
+      // give the new window a moment then print
+      setTimeout(()=>{ w.print(); }, 300);
+    });
+
+    // Initial preview
+    renderMolas();
+    updatePreview();
+
+    // update preview when molas array changes (already called in render)
   </script>
 </body>
 </html>
