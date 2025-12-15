@@ -1,31 +1,67 @@
-document.getElementById('formMolde').addEventListener('submit', function(e) {
-e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('formManutencao');
+    const historicoDiv = document.getElementById('historico');
+    
+    // Função para carregar e exibir os registros
+    function carregarHistorico() {
+        // Pega os dados do LocalStorage (simulando um BD)
+        const registros = JSON.parse(localStorage.getItem('manutencaoRegistros')) || [];
+        
+        historicoDiv.innerHTML = '<h2>Histórico de Manutenções</h2>'; // Limpa
+        
+        if (registros.length === 0) {
+            historicoDiv.innerHTML += '<p>Nenhum registro de manutenção encontrado.</p>';
+            return;
+        }
 
+        // Exibe cada registro
+        registros.forEach((registro, index) => {
+            const div = document.createElement('div');
+            div.className = 'manutencao-registro';
+            
+            let htmlContent = `
+                <p><strong>Molde:</strong> ${registro.molde}</p>
+                <p><strong>Responsável:</strong> ${registro.responsavel}</p>
+                <p><strong>Início:</strong> ${registro.dataIni} | <strong>Término:</strong> ${registro.dataTer}</p>
+                <p><strong>Limpeza:</strong> ${registro.limpeza}</p>
+                <p><strong>Molas:</strong> Cor: ${registro.molasCor || '-'}, Diâmetro: ${registro.molasDiametro || '-'}, QTD: ${registro.molasQtd || '-'}</p>
+                `;
+            
+            div.innerHTML = htmlContent;
+            historicoDiv.appendChild(div);
+        });
+    }
 
-const dados = {
-molde: molde.value,
-responsavel: responsavel.value,
-dataInicio: dataIni.value,
-dataTermino: dataTer.value,
-limpeza: document.querySelector('input[name="limpeza"]:checked')?.value,
-molas: {
-cor: molaCor.value,
-diametro: molaDiam.value,
-quantidade: molaQtd.value
-},
-parafusos: {
-quantidade: parafusoQtd.value,
-medida: parafusoMedida.value
-},
-pinosExtrator: {
-quantidade: pinoQtd.value,
-diametro: pinoDiam.value
-},
-engatesAgua: document.querySelector('input[name="agua"]:checked')?.value,
-polimento: document.querySelector('input[name="polimento"]:checked')?.value
-};
+    // Ação ao submeter o formulário
+    form.addEventListener('submit', (e) => {
+        e.preventDefault(); // Impede o envio padrão
+        
+        // 1. Captura dos dados (Exemplo com os campos definidos)
+        const novoRegistro = {
+            molde: document.getElementById('molde').value,
+            dataIni: document.getElementById('dataIni').value,
+            dataTer: document.getElementById('dataTer').value,
+            responsavel: document.getElementById('responsavel').value,
+            
+            // Itens de checklist
+            limpeza: document.querySelector('input[name="limpeza"]:checked').value,
+            molasCor: document.getElementById('molasCor').value,
+            molasDiametro: document.getElementById('molasDiametro').value,
+            molasQtd: document.getElementById('molasQtd').value,
+            // ... adicione os demais campos aqui
+        };
 
+        // 2. Armazenamento no LocalStorage
+        const registros = JSON.parse(localStorage.getItem('manutencaoRegistros')) || [];
+        registros.push(novoRegistro);
+        localStorage.setItem('manutencaoRegistros', JSON.stringify(registros));
+        
+        // 3. Feedback e Atualização
+        alert('Registro de manutenção salvo com sucesso!');
+        form.reset(); // Limpa o formulário após o registro
+        carregarHistorico();
+    });
 
-localStorage.setItem('manutencaoMolde', JSON.stringify(dados, null, 2));
-document.getElementById('saida').textContent = JSON.stringify(dados, null, 2);
+    // Carrega o histórico ao iniciar a página
+    carregarHistorico();
 });
