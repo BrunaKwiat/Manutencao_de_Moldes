@@ -1,4 +1,47 @@
 <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manutenção de Moldes</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    
+
+<h1>Manutenção de Moldes</h1>
+
+
+<form id="formMolde">
+<div class="grid">
+<div>
+<label>Molde</label>
+<input type="text" id="molde" />
+</div>
+
+
+<div>
+<label>Responsável</label>
+<input type="text" id="responsavel" />
+</div>
+
+
+<div>
+<label>Data Início</label>
+<input type="date" id="dataIni" />
+</div>
+
+
+<div>
+<label>Data Término</label>
+<input type="date" id="dataTer" />
+</div>
+
+
+<div>
+<label>Limpeza</label>
+<div class="radio-group">
+<label><input type="radio" name="limpeza" value="Sim"> Sim</label>
 <label><input type="radio" name="limpeza" value="Não"> Não</label>
 </div>
 </div>
@@ -38,40 +81,6 @@
 <label>Pinos Extrator - Quantidade</label>
 <input type="number" id="pinoQtd" />
 </div>
-
-
-<div>
-<label>Pinos Extrator - Diâmetro</label>
-<input type="text" id="pinoDiam" />
-</div>
-
-
-<div>
-<label>Engates de Água</label>
-<div class="radio-group">
-<label><input type="radio" name="agua" value="Sim"> Sim</label>
-<label><input type="radio" name="agua" value="Não"> Não</label>
-</div>
-</div>
-
-
-<div>
-<label>Polimento</label>
-<div class="radio-group">
-<label><input type="radio" name="polimento" value="Sim"> Sim</label>
-<label><input type="radio" name="polimento" value="Não"> Não</label>
-</div>
-</div>
-</div>
-
-
-<button type="submit">Salvar</button>
-</form>
-
-
-<pre id="saida"></pre>
-
-
 <script src="js/script.js"></script>
 </body>
 </html>
