@@ -1,67 +1,62 @@
+const API_URL = 'http://localhost:8080/manutencoes'; // Endereço do seu servidor Kotlin Ktor
+
 document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('formManutencao');
-    const historicoDiv = document.getElementById('historico');
-    
-    // Função para carregar e exibir os registros
-    function carregarHistorico() {
-        // Pega os dados do LocalStorage (simulando um BD)
-        const registros = JSON.parse(localStorage.getItem('manutencaoRegistros')) || [];
-        
-        historicoDiv.innerHTML = '<h2>Histórico de Manutenções</h2>'; // Limpa
-        
-        if (registros.length === 0) {
-            historicoDiv.innerHTML += '<p>Nenhum registro de manutenção encontrado.</p>';
-            return;
-        }
+    // ... (restante das variáveis)
 
-        // Exibe cada registro
-        registros.forEach((registro, index) => {
-            const div = document.createElement('div');
-            div.className = 'manutencao-registro';
+    // Função para carregar os registros (agora via API)
+    async function carregarHistorico() {
+        historicoDiv.innerHTML = '<h2>Histórico de Manutenções</h2><p>Carregando...</p>';
+        try {
+            const response = await fetch(API_URL);
+            const registros = await response.json();
             
-            let htmlContent = `
-                <p><strong>Molde:</strong> ${registro.molde}</p>
-                <p><strong>Responsável:</strong> ${registro.responsavel}</p>
-                <p><strong>Início:</strong> ${registro.dataIni} | <strong>Término:</strong> ${registro.dataTer}</p>
-                <p><strong>Limpeza:</strong> ${registro.limpeza}</p>
-                <p><strong>Molas:</strong> Cor: ${registro.molasCor || '-'}, Diâmetro: ${registro.molasDiametro || '-'}, QTD: ${registro.molasQtd || '-'}</p>
-                `;
+            historicoDiv.innerHTML = '<h2>Histórico de Manutenções</h2>'; 
             
-            div.innerHTML = htmlContent;
-            historicoDiv.appendChild(div);
-        });
+            // ... (Lógica para exibir os registros como antes, usando os dados 'registros')
+            
+        } catch (error) {
+            historicoDiv.innerHTML = `<h2>Histórico de Manutenções</h2><p style="color:red;">Erro ao conectar com o servidor Kotlin: ${error.message}</p>`;
+        }
     }
 
-    // Ação ao submeter o formulário
-    form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Impede o envio padrão
+    // Ação ao submeter o formulário (agora enviando para a API)
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault(); 
         
-        // 1. Captura dos dados (Exemplo com os campos definidos)
+        // 1. Captura e formata dos dados (O objeto DEVE bater com a classe Manutencao em Kotlin!)
         const novoRegistro = {
             molde: document.getElementById('molde').value,
             dataIni: document.getElementById('dataIni').value,
-            dataTer: document.getElementById('dataTer').value,
+            dataTer: document.getElementById('dataTer').value || null, // Se vazio, envia null (Kotlin pode lidar com String?)
             responsavel: document.getElementById('responsavel').value,
+            // ... (demais campos)
             
-            // Itens de checklist
-            limpeza: document.querySelector('input[name="limpeza"]:checked').value,
-            molasCor: document.getElementById('molasCor').value,
-            molasDiametro: document.getElementById('molasDiametro').value,
-            molasQtd: document.getElementById('molasQtd').value,
-            // ... adicione os demais campos aqui
+            // O ID é deixado fora, pois será gerado pelo Backend Kotlin
         };
 
-        // 2. Armazenamento no LocalStorage
-        const registros = JSON.parse(localStorage.getItem('manutencaoRegistros')) || [];
-        registros.push(novoRegistro);
-        localStorage.setItem('manutencaoRegistros', JSON.stringify(registros));
-        
-        // 3. Feedback e Atualização
-        alert('Registro de manutenção salvo com sucesso!');
-        form.reset(); // Limpa o formulário após o registro
-        carregarHistorico();
+        try {
+            const response = await fetch(API_URL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(novoRegistro),
+            });
+            
+            if (response.ok) {
+                alert('Registro de manutenção salvo com sucesso no servidor!');
+                form.reset(); 
+                await carregarHistorico();
+            } else {
+                const errorText = await response.text();
+                alert(`Erro ao salvar no servidor: ${errorText}`);
+            }
+
+        } catch (error) {
+            alert(`Falha na conexão de rede: ${error.message}`);
+        }
     });
 
-    // Carrega o histórico ao iniciar a página
     carregarHistorico();
 });
