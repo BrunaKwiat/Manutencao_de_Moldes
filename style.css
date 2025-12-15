@@ -1,128 +1,135 @@
-/* RESET BÁSICO E FONTES */
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f4f7f6;
-    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f4f7f9;
     padding: 20px;
-    color: #333;
 }
 
 .container {
-    max-width: 900px;
+    max-width: 800px;
     margin: 0 auto;
-    background: #fff;
+    background: #ffffff;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 h1 {
-    color: #007bff;
     text-align: center;
-    margin-bottom: 30px;
+    color: #004d99;
+    border-bottom: 2px solid #e0e0e0;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
 }
 
-/* ESTILOS DO FORMULÁRIO */
-.section-header {
-    background-color: #e9ecef;
-    color: #343a40;
-    padding: 10px;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    border-radius: 4px;
+fieldset {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-bottom: 25px;
+    border-radius: 6px;
+}
+
+legend {
+    font-size: 1.2em;
     font-weight: bold;
+    color: #333;
+    padding: 0 10px;
 }
 
-.input-group, .input-group-inline {
+.field-group {
+    display: inline-block;
+    width: 48%; /* Para alinhar dois campos por linha */
     margin-bottom: 15px;
+    padding-right: 2%;
+    box-sizing: border-box;
 }
 
-.input-group label {
+.field-group label {
     display: block;
     margin-bottom: 5px;
     font-weight: 500;
+    color: #555;
 }
 
-.input-group input[type="text"],
-.input-group input[type="date"],
-.input-group input[type="number"],
-.checklist-item input[type="text"],
-.checklist-item input[type="number"] {
+input[type="text"],
+input[type="number"],
+input[type="date"] {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #ddd;
     border-radius: 4px;
-    box-sizing: border-box; /* Garante que o padding não aumente a largura total */
+    box-sizing: border-box;
+    transition: border-color 0.3s;
 }
 
-/* Agrupamento em linha para datas */
-.input-group-inline {
-    display: flex;
-    gap: 20px;
-}
-.input-group-inline .input-group {
-    flex: 1;
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus {
+    border-color: #007bff;
+    outline: none;
 }
 
-/* ESTILOS DO CHECKLIST */
-.checklist-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-    padding: 8px 0;
-    border-bottom: 1px dashed #eee;
+/* Alinhamento de grupos de data */
+.date-group {
+    width: 49%;
 }
 
-.checklist-item label {
-    margin-right: 15px;
+/* Checkbox/Radio Styling */
+.checkbox-group {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #eee;
+    border-radius: 4px;
+    display: inline-block;
+    margin-right: 20px;
+}
+
+.checkbox-group label {
     font-weight: normal;
-    white-space: nowrap; /* Evita que a label quebre */
+    display: inline;
+    margin-right: 15px;
 }
 
-.checklist-item input[type="radio"] {
-    margin: 0 5px 0 10px;
+/* Estilo para os inputs pequenos (M, MM) */
+.small-input {
+    width: 40px;
+    display: inline-block;
+    padding: 8px;
+    text-align: center;
 }
 
-.checklist-item input[type="text"],
-.checklist-item input[type="number"] {
-    width: auto;
-    max-width: 80px;
-    margin-right: 10px;
+.label-inline {
+    margin: 0 5px;
+    font-weight: 500;
+    color: #555;
 }
 
-/* BOTÃO */
-button[type="submit"] {
+/* Botão Adicionar */
+#adicionarBtn {
     display: block;
     width: 100%;
-    padding: 12px;
+    padding: 15px;
     background-color: #28a745;
     color: white;
     border: none;
     border-radius: 4px;
+    font-size: 1.1em;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 20px;
     transition: background-color 0.3s;
+    margin-top: 20px;
 }
 
-button[type="submit"]:hover {
+#adicionarBtn:hover {
     background-color: #218838;
 }
 
-/* HISTÓRICO */
-#historico h2 {
-    color: #007bff;
-    margin-top: 40px;
-    padding-top: 20px;
-    border-top: 1px solid #ccc;
-}
-.manutencao-registro {
-    border: 1px solid #ddd;
+/* Área de Resultado */
+.resultado {
+    margin-top: 25px;
     padding: 15px;
-    margin-bottom: 10px;
+    background-color: #e9f7ef;
+    border: 1px solid #d4edda;
     border-radius: 4px;
-    background-color: #f9f9f9;
-}
-.manutencao-registro p {
-    margin: 5px 0;
+    color: #155724;
+    display: none; /* Inicialmente escondido */
+    white-space: pre-wrap; /* Preserva quebras de linha */
 }
