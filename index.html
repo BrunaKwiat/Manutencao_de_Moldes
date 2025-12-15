@@ -3,58 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sistema de Manutenção de Moldes</title>
+    <title>Registro de Manutenção de Moldes</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
     <div class="container">
-        <h1>🛠️ Manutenção de Moldes</h1>
-        <form id="formManutencao">
-            <div class="section-header">Dados do Molde e Responsabilidade</div>
-            <div class="input-group">
-                <label for="molde">Molde:</label>
-                <input type="text" id="molde" required>
-            </div>
-            <div class="input-group-inline">
-                <div class="input-group">
+        <h1>🛠️ Registro de Manutenção de Moldes</h1>
+        <form id="manutencaoForm">
+
+            <fieldset>
+                <legend>Informações Gerais</legend>
+                <div class="field-group">
+                    <label for="molde">Molde:</label>
+                    <input type="text" id="molde" name="molde" required>
+                </div>
+                <div class="field-group">
+                    <label for="responsavel">Responsável:</label>
+                    <input type="text" id="responsavel" name="responsavel" required>
+                </div>
+                <div class="field-group date-group">
                     <label for="dataIni">Data Início:</label>
-                    <input type="date" id="dataIni" required>
+                    <input type="date" id="dataIni" name="dataIni" required>
                 </div>
-                <div class="input-group">
+                <div class="field-group date-group">
                     <label for="dataTer">Data Término:</label>
-                    <input type="date" id="dataTer">
+                    <input type="date" id="dataTer" name="dataTer">
                 </div>
-            </div>
-            <div class="input-group">
-                <label for="responsavel">Responsável:</label>
-                <input type="text" id="responsavel" required>
-            </div>
+            </fieldset>
 
-            <div class="section-header">Checklist de Itens</div>
-            
-            <div class="checklist-item">
-                <label>Limpeza:</label>
-                <input type="radio" id="limpezaSim" name="limpeza" value="SIM" required><label for="limpezaSim">SIM</label>
-                <input type="radio" id="limpezaNao" name="limpeza" value="NÃO"><label for="limpezaNao">NÃO</label>
-            </div>
+            <fieldset>
+                <legend>Verificações Básicas</legend>
+                <div class="checkbox-group">
+                    <label>Limpeza:</label>
+                    <input type="radio" id="limpezaSim" name="limpeza" value="Sim"> <label for="limpezaSim">Sim</label>
+                    <input type="radio" id="limpezaNao" name="limpeza" value="Não" checked> <label for="limpezaNao">Não</label>
+                </div>
+                <div class="checkbox-group">
+                    <label>Polimento:</label>
+                    <input type="radio" id="polimentoSim" name="polimento" value="Sim"> <label for="polimentoSim">Sim</label>
+                    <input type="radio" id="polimentoNao" name="polimento" value="Não" checked> <label for="polimentoNao">Não</label>
+                </div>
+            </fieldset>
 
-            <div class="checklist-item">
-                <label for="molasCor">Molas (Cor):</label>
-                <input type="text" id="molasCor" placeholder="Cor">
-                <label for="molasDiametro">Diâmetro (mm):</label>
-                <input type="number" id="molasDiametro" step="0.01" placeholder="Diâmetro">
-                <label for="molasQtd">QTD:</label>
-                <input type="number" id="molasQtd" placeholder="QTD">
-            </div>
-            
-            <button type="submit">Registrar Manutenção</button>
+            <fieldset>
+                <legend>Molas</legend>
+                <div class="field-group">
+                    <label for="molasCor">Cor:</label>
+                    <input type="text" id="molasCor" name="molasCor">
+                </div>
+                <div class="field-group">
+                    <label for="molasDiametro">Diâmetro (mm):</label>
+                    <input type="number" id="molasDiametro" name="molasDiametro" min="0" step="0.1">
+                </div>
+                <div class="field-group">
+                    <label for="molasQuantidade">Quantidade:</label>
+                    <input type="number" id="molasQuantidade" name="molasQuantidade" min="0">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Parafusos</legend>
+                <div class="field-group">
+                    <label for="parafusosQuantidade">Quantidade:</label>
+                    <input type="number" id="parafusosQuantidade" name="parafusosQuantidade" min="0">
+                </div>
+                <div class="field-group">
+                    <label>Tipo:</label>
+                    <span class="label-inline">ALEN, M</span>
+                    <input type="number" id="parafusosM" name="parafusosM" min="0" class="small-input">
+                    <span class="label-inline">X</span>
+                    <input type="number" id="parafusosMM" name="parafusosMM" min="0" class="small-input">
+                    <span class="label-inline">MM</span>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Pinos Extrator</legend>
+                <div class="field-group">
+                    <label for="pinosQuantidade">Quantidade:</label>
+                    <input type="number" id="pinosQuantidade" name="pinosQuantidade" min="0">
+                </div>
+                <div class="field-group">
+                    <label for="pinosDiametro">Diâmetro (mm):</label>
+                    <input type="number" id="pinosDiametro" name="pinosDiametro" min="0" step="0.1">
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <legend>Engates de Água</legend>
+                <div class="checkbox-group">
+                    <label>Troca/Manutenção:</label>
+                    <input type="radio" id="engatesSim" name="engates" value="Sim"> <label for="engatesSim">Sim</label>
+                    <input type="radio" id="engatesNao" name="engates" value="Não" checked> <label for="engatesNao">Não</label>
+                </div>
+                <div class="field-group">
+                    <label for="engatesQuantidade">Quantidade (se trocado):</label>
+                    <input type="number" id="engatesQuantidade" name="engatesQuantidade" min="0">
+                </div>
+            </fieldset>
+
+            <button type="submit" id="adicionarBtn">➕ ADICIONAR REGISTRO</button>
+
         </form>
 
-        <div id="historico">
-            <h2>Histórico de Manutenções</h2>
-            </div>
+        <div id="resultado" class="resultado"></div>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
