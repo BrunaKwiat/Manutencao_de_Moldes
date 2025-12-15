@@ -1,86 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Manutenção de Moldes</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>Sistema de Manutenção de Moldes</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="container">
+        <h1>🛠️ Manutenção de Moldes</h1>
+        <form id="formManutencao">
+            <div class="section-header">Dados do Molde e Responsabilidade</div>
+            <div class="input-group">
+                <label for="molde">Molde:</label>
+                <input type="text" id="molde" required>
+            </div>
+            <div class="input-group-inline">
+                <div class="input-group">
+                    <label for="dataIni">Data Início:</label>
+                    <input type="date" id="dataIni" required>
+                </div>
+                <div class="input-group">
+                    <label for="dataTer">Data Término:</label>
+                    <input type="date" id="dataTer">
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="responsavel">Responsável:</label>
+                <input type="text" id="responsavel" required>
+            </div>
+
+            <div class="section-header">Checklist de Itens</div>
+            
+            <div class="checklist-item">
+                <label>Limpeza:</label>
+                <input type="radio" id="limpezaSim" name="limpeza" value="SIM" required><label for="limpezaSim">SIM</label>
+                <input type="radio" id="limpezaNao" name="limpeza" value="NÃO"><label for="limpezaNao">NÃO</label>
+            </div>
+
+            <div class="checklist-item">
+                <label for="molasCor">Molas (Cor):</label>
+                <input type="text" id="molasCor" placeholder="Cor">
+                <label for="molasDiametro">Diâmetro (mm):</label>
+                <input type="number" id="molasDiametro" step="0.01" placeholder="Diâmetro">
+                <label for="molasQtd">QTD:</label>
+                <input type="number" id="molasQtd" placeholder="QTD">
+            </div>
+            
+            <button type="submit">Registrar Manutenção</button>
+        </form>
+
+        <div id="historico">
+            <h2>Histórico de Manutenções</h2>
+            </div>
+    </div>
     
-
-<h1>Manutenção de Moldes</h1>
-
-
-<form id="formMolde">
-<div class="grid">
-<div>
-<label>Molde</label>
-<input type="text" id="molde" />
-</div>
-
-
-<div>
-<label>Responsável</label>
-<input type="text" id="responsavel" />
-</div>
-
-
-<div>
-<label>Data Início</label>
-<input type="date" id="dataIni" />
-</div>
-
-
-<div>
-<label>Data Término</label>
-<input type="date" id="dataTer" />
-</div>
-
-
-<div>
-<label>Limpeza</label>
-<div class="radio-group">
-<label><input type="radio" name="limpeza" value="Sim"> Sim</label>
-<label><input type="radio" name="limpeza" value="Não"> Não</label>
-</div>
-</div>
-
-
-<div>
-<label>Molas - Cor</label>
-<input type="text" id="molaCor" />
-</div>
-
-
-<div>
-<label>Molas - Diâmetro</label>
-<input type="text" id="molaDiam" />
-</div>
-
-
-<div>
-<label>Molas - Quantidade</label>
-<input type="number" id="molaQtd" />
-</div>
-
-
-<div>
-<label>Parafusos Allen - Quantidade</label>
-<input type="number" id="parafusoQtd" />
-</div>
-
-
-<div>
-<label>Parafusos Allen - Medida (M x MM)</label>
-<input type="text" id="parafusoMedida" placeholder="Ex: M6 x 20" />
-</div>
-
-
-<div>
-<label>Pinos Extrator - Quantidade</label>
-<input type="number" id="pinoQtd" />
-</div>
-<script src="js/script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
