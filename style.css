@@ -22,32 +22,32 @@ h1 {
 }
 
 fieldset {
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin-bottom: 25px;
-    border-radius: 6px;
+    display: flex;                  /* Ativa o modo flexível */
+    flex-direction: row-reverse;    /* Inverte a ordem visual dos elementos */
+    justify-content: flex-end;      /* Alinha os campos à esquerda após a inversão */
+    align-items: flex-start;        /* Alinha os campos pelo topo */
+    gap: 30px;                      /* Cria um espaço entre os dois grupos */
+    border: 1px solid #ccc;         /* Mantém a borda do fieldset */
+    padding: 15px;
 }
 
-legend {
-    font-size: 1.2em;
-    font-weight: bold;
-    color: #333;
-    padding: 0 10px;
-}
-
+/* Ajuste opcional para os grupos de campos */
 .field-group {
-    display: inline-block;
-    width: 48%; /* Para alinhar dois campos por linha */
-    margin-bottom: 15px;
-    padding-right: 2%;
-    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;         /* Mantém o label acima do input */
 }
 
+/* Ajuste para que o "X" e o "MM" fiquem na mesma linha no grupo Tipo */
+.field-group:has(.label-inline) {
+    flex-direction: row;            /* Coloca os itens do Tipo lado a lado */
+    flex-wrap: wrap;                /* Permite quebra de linha se necessário */
+    align-items: center;
+    gap: 5px;
+}
+
+/* Força o label "Tipo:" a ocupar a linha toda se desejar */
 .field-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: 500;
-    color: #555;
+    width: 100%;
 }
 
 input[type="text"],
